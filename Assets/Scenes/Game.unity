@@ -196,8 +196,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1013.6169, y: 256.98026, z: -21.872234}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -234,9 +234,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliensGridWidth: 11
   aliensGridHeight: 5
+  aliensWidthSpacing: 0.75
+  aliensHeightSpacing: 0.75
   aliensPrefabs:
   - {fileID: 2758791920554562196, guid: dd4b1796ecac5954989b3ef78297c132, type: 3}
   aliensGridParent: {fileID: 1670210855}
+  aliensXMoveDistance: 0.1
 --- !u!4 &1281437522
 Transform:
   m_ObjectHideFlags: 0
