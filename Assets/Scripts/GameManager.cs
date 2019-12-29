@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; set; }
+
     // Grid spawn/layout
     public int aliensGridWidth;
     public int aliensGridHeight;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     // Gameplay
     public float aliensXMoveDistance = .0001f;
+    public float aliensSpeedFactor = 0.001f;
 
     // Useful infos 
     private List<Alien> livingAliens;
@@ -27,6 +30,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
+
         livingAliens = new List<Alien>();
         gridInitX = Screen.width - 15f;
         gridInitY = Screen.height / 3f;
@@ -56,14 +61,23 @@ public class GameManager : MonoBehaviour
             foreach (Alien alien in livingAliens)
             {
                 alien.transform.Translate(new Vector3(aliensXMoveDistance, 0f, 0f));
-                yield return new WaitForSeconds(.5f);
+                alien.Animate();
+                yield return new WaitForSeconds(this.livingAliens.Count * aliensSpeedFactor);
             }
         }
+    }
+
+    public void RemoveAlienFromMgr(Alien a)
+    {
+        livingAliens.Remove(a);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Destroy(livingAliens[0].gameObject);
+        }
     }
 }
