@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }
 
-    // Grid spawn/layout
+    [Header("Grid spawn/layout")]
     public int aliensGridWidth;
     public int aliensGridHeight;
     public float aliensWidthSpacing;
@@ -20,22 +20,27 @@ public class GameManager : MonoBehaviour
     private float gridInitX;
     private float gridInitY;
 
-    // Gameplay
-    public float aliensXMoveDistance = .0001f;
-    public float aliensSpeedFactor = 0.001f;
+    [Header("Gameplay")]
+    public float aliensXMoveDistance = .1f;
+    public float aliensYMoveDistance = -1f;
+    public float aliensSpeedFactor = 0.01f;
 
     // Useful infos 
     private List<Alien> livingAliens;
+    private Camera mainCam;
+    private bool canMoveDown;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Instance = this;
+        this.mainCam = Camera.main;
 
         livingAliens = new List<Alien>();
         gridInitX = Screen.width - 15f;
         gridInitY = Screen.height / 3f;
         StartCoroutine(InitAliens());
+
+        this.canMoveDown = false;
     }
 
     private IEnumerator InitAliens()
@@ -58,10 +63,32 @@ public class GameManager : MonoBehaviour
     {
         while (livingAliens.Count != 0)
         {
+            // move down
+            if (this.canMoveDown)
+            {
+                foreach (Alien alien in livingAliens)
+                {
+                    alien.SwitchDirection();
+                    alien.Translate(new Vector3(0f, aliensYMoveDistance, 0f));
+                    yield return new WaitForSeconds(this.livingAliens.Count * aliensSpeedFactor);
+                }
+                this.canMoveDown = false;
+            }
+
+            // move laterally
             foreach (Alien alien in livingAliens)
             {
-                alien.transform.Translate(new Vector3(aliensXMoveDistance, 0f, 0f));
-                alien.Animate();
+                Vector3 alienPosOnScreen = this.mainCam.WorldToScreenPoint(alien.transform.position);
+                if (alien.directionFactor == 1f && alienPosOnScreen.x >= Screen.width - (Screen.width / 10f))
+                {
+                    this.canMoveDown = true;
+                }
+                else if (alien.directionFactor == -1f && alienPosOnScreen.x <= Screen.width / 10f)
+                {
+                    this.canMoveDown = true;
+                }
+
+                alien.Translate(new Vector3(aliensXMoveDistance * alien.directionFactor, 0f, 0f));
                 yield return new WaitForSeconds(this.livingAliens.Count * aliensSpeedFactor);
             }
         }

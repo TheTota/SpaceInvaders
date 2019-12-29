@@ -239,8 +239,9 @@ MonoBehaviour:
   aliensPrefabs:
   - {fileID: 2758791920554562196, guid: dd4b1796ecac5954989b3ef78297c132, type: 3}
   aliensGridParent: {fileID: 1670210855}
-  aliensXMoveDistance: 0.1
-  aliensSpeedFactor: 0.01
+  aliensXMoveDistance: 0.16
+  aliensYMoveDistance: -0.5
+  aliensSpeedFactor: 0.0005
 --- !u!4 &1281437522
 Transform:
   m_ObjectHideFlags: 0
