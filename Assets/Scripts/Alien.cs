@@ -43,7 +43,7 @@ public class Alien : MonoBehaviour
         this.directionFactor = (this.directionFactor == 1f ? -1f : 1f);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         GameManager.Instance.RemoveAlienFromMgr(this);
         Debug.Log("TODO: Here play an animation for the death of da boi");

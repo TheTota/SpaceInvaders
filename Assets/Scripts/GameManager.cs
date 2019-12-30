@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -43,6 +44,15 @@ public class GameManager : MonoBehaviour
         this.canMoveDown = false;
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            livingAliens[0].gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator InitAliens()
     {
         for (int h = 0; h < aliensGridHeight; h++)
@@ -66,7 +76,7 @@ public class GameManager : MonoBehaviour
             // move down
             if (this.canMoveDown)
             {
-                foreach (Alien alien in livingAliens)
+                foreach (Alien alien in livingAliens.ToList())
                 {
                     alien.SwitchDirection();
                     alien.Translate(new Vector3(0f, aliensYMoveDistance, 0f));
@@ -76,7 +86,7 @@ public class GameManager : MonoBehaviour
             }
 
             // move laterally
-            foreach (Alien alien in livingAliens)
+            foreach (Alien alien in livingAliens.ToList())
             {
                 Vector3 alienPosOnScreen = this.mainCam.WorldToScreenPoint(alien.transform.position);
                 if (alien.directionFactor == 1f && alienPosOnScreen.x >= Screen.width - (Screen.width / 10f))
@@ -97,14 +107,5 @@ public class GameManager : MonoBehaviour
     public void RemoveAlienFromMgr(Alien a)
     {
         livingAliens.Remove(a);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Destroy(livingAliens[0].gameObject);
-        }
     }
 }
