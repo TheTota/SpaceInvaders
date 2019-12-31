@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
         livingAliens = new List<Alien>();
         gridInitX = Screen.width - 15f;
-        gridInitY = Screen.height / 3f;
+        gridInitY = Screen.height / 2.985f;
         StartCoroutine(InitAliens());
 
         this.canMoveDown = false;
