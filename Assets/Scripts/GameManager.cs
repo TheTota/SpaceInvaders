@@ -49,10 +49,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            livingAliens[0].gameObject.SetActive(false);
-        }
     }
 
     private IEnumerator InitAliens()
@@ -64,7 +60,8 @@ public class GameManager : MonoBehaviour
                 Vector3 pos = new Vector3(gridInitX + w * aliensWidthSpacing, gridInitY + h * aliensHeightSpacing);
                 GameObject spawnedAlien = Instantiate(aliensPrefabs[Random.Range(0, aliensPrefabs.Length)], pos, Quaternion.identity, aliensGridParent);
                 livingAliens.Add(spawnedAlien.GetComponent<Alien>());
-                yield return new WaitForSeconds(.085f);
+                //yield return new WaitForSeconds(.085f);
+                yield return new WaitForSeconds(.01f);
             }
         }
 
