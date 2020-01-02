@@ -23,16 +23,25 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool leftInputs = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow);
-        bool rightInputs = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+        if (GameManager.Instance.AliensSpawned)
+        {
+            // moving
+            bool leftInputs = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow);
+            bool rightInputs = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+            if (leftInputs && !rightInputs)
+            {
+                Move(-xMoveSpeed);
+            }
+            else if (!leftInputs && rightInputs)
+            {
+                Move(xMoveSpeed);
+            }
 
-        if (leftInputs && !rightInputs)
-        {
-            Move(-xMoveSpeed);
-        }
-        else if (!leftInputs && rightInputs)
-        {
-            Move(xMoveSpeed);
+            // shooting
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("Shoot!");
+            }
         }
     }
 

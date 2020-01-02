@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     private List<Alien> livingAliens;
     private Camera mainCam;
     private bool canMoveDown;
+    public bool AliensSpawned { get; set; }
 
     void Awake()
     {
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(InitAliens());
 
         this.canMoveDown = false;
+        this.AliensSpawned = false;
     }
 
     // Update is called once per frame
@@ -66,6 +68,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        this.AliensSpawned = true;
         StartCoroutine(MoveAliens());
     }
 
